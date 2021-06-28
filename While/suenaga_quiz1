@@ -1,0 +1,30 @@
+while (0 < X) do X := X - 1 changes {X = 2} to {X = 0} by C-WhileT {
+    X = 2 |- 0 < X evalto true by B-Lt {
+        X = 2 |- 0 evalto 0 by A-Const {};
+        X = 2 |- X evalto 2 by A-Var {};
+    };
+    X := X - 1 changes {X = 2} to {X = 1} by C-Assign {
+        X = 2 |- X - 1 evalto 1 by A-Minus {
+            X = 2 |- X evalto 2 by A-Var {};
+            X = 2 |- 1 evalto 1 by A-Const {};
+        }
+    };
+    while (0 < X) do X := X - 1 changes {X = 1} to {X = 0} by C-WhileT {
+        X = 1 |- 0 < X evalto true by B-Lt {
+            X = 1 |- 0 evalto 0 by A-Const {};
+            X = 1 |- X evalto 1 by A-Var {};
+        };
+        X := X - 1 changes {X = 1} to {X = 0} by C-Assign {
+            X = 1 |- X - 1 evalto 0 by A-Minus {
+                X = 1 |- X evalto 1 by A-Var {};
+                X = 1 |- 1 evalto 1 by A-Const {};
+            }
+        };
+        while (0 < X) do X := X - 1 changes {X = 0} to {X = 0} by C-WhileF {
+            X = 0 |- 0 < X evalto false by B-Lt {
+                X = 0 |- 0 evalto 0 by A-Const {};
+                X = 0 |- X evalto 0 by A-Var {};
+            }
+        };
+    }
+}
