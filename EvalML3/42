@@ -1,0 +1,12 @@
+|- let sq = fun x -> x * x in sq 3 + sq 4 evalto 25 by E-Let {
+    |- fun x -> x * x evalto ()[fun x -> x * x] by E-Fun {};
+    sq = ()[fun x -> x * x] |- sq 3 + sq 4 evalto 25 by E-Plus {
+        sq = ()[fun x -> x * x] |- sq 3 evalto 9 by E-App {
+            sq = ()[fun x -> x * x] |- sq evalto ()[fun x -> x * x] by E-Fun {};
+            sq = ()[fun x -> x * x] |- 3 evalto 3 by E-Int {};
+            sq = (x=3)[fun x -> x * x] |- x * x evalto 9 by E-Fun {};
+        };
+        sq = ()[fun x -> x * x] |- sq 4 evalto 16 by E-App {};
+        9 plus 16 is 25 by B-Plus {};
+    };
+}
